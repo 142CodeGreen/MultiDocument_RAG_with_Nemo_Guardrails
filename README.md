@@ -1,3 +1,14 @@
+---
+title: Multimode
+emoji: 📚
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+sdk_version: 5.0.2
+app_file: app.py
+pinned: false
+---
+
 # Multimodal_RAG_with_Nemo_Guardrails
 
 # Practice Mulmimodal RAG using NVIDIA NIM, NVIDIA NeMo Guardrails, LlamaIndex, Milvus and Gradio UI
