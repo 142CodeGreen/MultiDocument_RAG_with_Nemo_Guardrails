@@ -12,4 +12,5 @@ langchain-nvidia-ai-endpoints
 transformers 
 torch  # Assuming you're using PyTorch for GPU acceleration
 nvidia-ml-py3  # For NVIDIA GPU utilities, if needed for monitoring or other purposes
-torch transformers python-pptx Pillow # install pptxreader dependency
+python-pptx
+Pillow # install pptxreader dependency
