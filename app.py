@@ -56,7 +56,8 @@ def load_documents(file_objs):
     try:
         if not file_objs:
             return "Error: No files selected."
-
+            
+        all_texts = []  # Accumulate text from all files
         file_extractor = {
         ".pdf": PDFReader(),
         ".csv": CSVReader(),
@@ -66,6 +67,15 @@ def load_documents(file_objs):
         ".jpg": ImageReader(),
         ".png": ImageReader(),
         }
+
+        for file_obj in file_objs:  # Iterate through file objects  # to process correct file type
+            file_extension = os.path.splitext(file_obj.name)[1].lower()
+            if file_extension in file_extractor:
+                extractor = file_extractor[file_extension]
+                extracted_text = extractor.extract(file_obj)
+                all_texts.extend(extracted_text)  # Add extracted text to the list
+            else:
+                print(f"Warning: Unsupported file type: {file_extension}")
 
         file_paths = get_files_from_input(file_objs)
         documents = []
@@ -91,14 +101,15 @@ def load_documents(file_objs):
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
         # Create the index from the documents
-        index = VectorStoreIndex.from_documents(documents, storage_context=storage_context) # Create index inside the function after documents are loaded
+        index = VectorStoreIndex.from_documents(all_texts, embedding=embeddings) # Create index inside the function after documents are loaded
 
         # Create the query engine after the index is created
-        query_engine = index.as_query_engine(similarity_top_k=20, streaming=True)
+        query_engine = index.as_query_engine()
         return f"Successfully loaded {len(documents)} documents from {len(file_paths)} files."
     except Exception as e:
         return f"Error loading documents: {str(e)}"
 
+    
 # Function to handle chat interactions
 def chat(message,history):
     global query_engine
