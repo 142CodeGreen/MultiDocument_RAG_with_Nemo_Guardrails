@@ -162,7 +162,7 @@ with gr.Blocks() as demo:
   clear = gr.Button("Clear")
 
 # Set up event handler (Event handlers should be defined within the 'with gr.Blocks() as demo:' block)
-  btn.click(process_multimodal_uploads,inputs=[file_uploader, url_input], outputs=[load_output])
+  load_btn.click(process_multimodal_uploads,inputs=[file_uploader, url_input], outputs=[load_output])
   msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot]) # Use submit button instead of msg
   clear.click(lambda: None, None, chatbot, queue=False)
 
