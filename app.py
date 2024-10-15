@@ -145,10 +145,10 @@ with gr.Blocks() as demo:
   gr.Markdown("Upload **at least** one document, optional to input HTML URL before Q&A")  
 
   with gr.Row():
-      file_uploader = gr.File(label="Select files to upload", file_count="multiple")
-          with gr.Column():
-              url_input = gr.Textbox(label="🔗 Paste a URL (optional)",placeholder="Enter a HTML URL here")
-      load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")
+  with gr.Column():  # Group file_uploader and url_input on the left
+    file_uploader = gr.File(label="Select files to upload", file_count="multiple")
+    url_input = gr.Textbox(label="🔗 Paste a URL (optional)", placeholder="Enter a HTML URL here")
+  load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")  # Place load_btn on the right
 
   load_output = gr.Textbox(label="Load Status")
 
