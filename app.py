@@ -27,6 +27,7 @@ from llama_index.readers.file import (
     PptxReader,
     CSVReader,
 )
+os.makedirs('./data', exist_ok=True)
 
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
 Settings.embed_model = NVIDIAEmbedding(model="NV-Embed-QA", truncate="END")
