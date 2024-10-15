@@ -134,11 +134,11 @@ with gr.Blocks() as demo:
   description=("Upload **at least** one document, optional to input HTML URL before Q&A")  
 
   with gr.Row():
-    file_input = [
-        gr.File(label="Select files to upload", file_count="multiple"), 
-        gr.Textbox(label="🔗 Paste a URL (optional)",placeholder="Enter a HTML URL here")
-    ]
-    load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")
+        file_input = [
+            gr.File(label="Select files to upload", file_count="multiple"), 
+            gr.Textbox(label="🔗 Paste a URL (optional)",placeholder="Enter a HTML URL here")
+        ]
+        load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")
 
   load_output = gr.Textbox(label="Load Status")
 
