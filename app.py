@@ -140,6 +140,11 @@ def stream_response(message,history):
         yield history + [(message, f"Error processing query: {str(e)}")]
 
 # Create the Gradio interface
+def process_multimodal_uploads(image, text, file):
+    # This function would process the inputs as needed. Here's just a placeholder
+    # response reflecting what's been uploaded.
+    return f"Processed: Image: {'Yes' if image else 'No'}, Text: {text}, File: {file.name if file else 'No file'}"
+
 with gr.Blocks() as demo:
   gr.Markdown("# Multimodal RAG Chatbot 🦀 ")
   gr.Markdown("Upload **at least** one document, optional to input HTML URL before Q&A")  
@@ -157,7 +162,7 @@ with gr.Blocks() as demo:
   clear = gr.Button("Clear")
 
 # Set up event handler (Event handlers should be defined within the 'with gr.Blocks() as demo:' block)
-  load_btn.click(load_documents, inputs=[file_uploader, url_input], outputs=[load_output])
+  btn.click(process_multimodal_uploads,inputs=[file_uploader, url_input], outputs=[load_output])
   msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot]) # Use submit button instead of msg
   clear.click(lambda: None, None, chatbot, queue=False)
 
