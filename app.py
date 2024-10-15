@@ -22,7 +22,7 @@ Settings.llm = NVIDIA(model="meta/llama-3.1-8b-instruct")
 from llama_index.readers.file import (
     DocxReader,
     PDFReader,
-    HTMLTagReader,
+    HTMLReader,
     ImageReader,
     PptxReader,
     CSVReader,
