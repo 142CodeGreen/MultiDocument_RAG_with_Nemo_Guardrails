@@ -17,7 +17,7 @@ pinned: false
 1. Clone the repository:
 ```
 git clone https://github.com/142CodeGreen/Multimodal_RAG_with_Nemo_Guardrails.git
-cd RAG-with-NeMo-Guardrails
+cd Multimodal_RAG_with_Nemo_Guardrails
 ```
 
 2. Install the required packages:
