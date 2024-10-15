@@ -138,7 +138,7 @@ with gr.Blocks() as demo:
 
   with gr.Row():
       file_input = gr.File(label="Select files to upload", file_count="multiple")
-      load_btn = gr.Button("Load Documents (PDF,CSV,Docx,Pptx,JPG,PNG)
+      load_btn = gr.Button("Load Documents (PDF,CSV,Docx,Pptx,JPG,PNG)")
 
   load_output = gr.Textbox(label="Load Status")
 
