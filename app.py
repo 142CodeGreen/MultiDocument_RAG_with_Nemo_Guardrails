@@ -22,7 +22,7 @@ Settings.llm = NVIDIA(model="meta/llama-3.1-8b-instruct")
 from llama_index.readers.file import (
     DocxReader,
     PDFReader,
-    HTMLReader,
+    HTMLTagReader,
     ImageReader,
     PptxReader,
     CSVReader,
@@ -65,7 +65,7 @@ def load_documents(file_objs):
         file_extractor = {
         ".pdf": PDFReader(),
         ".csv": CSVReader(),
-        ".html": HTMLReader(),
+        ".html": HTMLTagReader(),
         ".pptx": PptxReader(),
         ".docx": DocxReader(),
         ".jpg": ImageReader(),
