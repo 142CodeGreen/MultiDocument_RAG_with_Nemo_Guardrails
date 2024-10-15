@@ -134,11 +134,11 @@ with gr.Blocks() as demo:
   description=("Upload **at least** one document, optional to input HTML URL before Q&A")  
 
   with gr.Row():
-      input=[
-          gr.File(label="Select files to upload", file_count="multiple"),
-          gr.Textbox(label="🔗 Paste a URL (optional)",placeholder="Enter a HTML URL here")
-      ]
-      load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")
+    file_input = [
+        gr.File(label="Select files to upload", file_count="multiple"), 
+        gr.Textbox(label="🔗 Paste a URL (optional)",placeholder="Enter a HTML URL here")
+    ]
+    load_btn = gr.Button("Upload input (PDF,CSV,Docx,Pptx,JPG,PNG,website)")
 
   load_output = gr.Textbox(label="Load Status")
 
@@ -147,7 +147,7 @@ with gr.Blocks() as demo:
   clear = gr.Button("Clear")
 
 # Set up event handler (Event handlers should be defined within the 'with gr.Blocks() as demo:' block)
-  load_btn.click(load_documents, inputs=[file_input], outputs=[load_output])
+  load_btn.click(load_documents, inputs=[gr.File,gr.Textbook], outputs=[load_output])
   msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot]) # Use submit button instead of msg
   clear.click(lambda: None, None, chatbot, queue=False)
 
