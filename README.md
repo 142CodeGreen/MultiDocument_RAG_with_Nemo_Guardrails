@@ -9,7 +9,6 @@ app_file: app.py
 pinned: false
 ---
 
-# Multimodal_RAG_with_Nemo_Guardrails
 
 # Practice Mulmimodal RAG using NVIDIA NIM, NVIDIA NeMo Guardrails, LlamaIndex, Milvus and Gradio UI
 
