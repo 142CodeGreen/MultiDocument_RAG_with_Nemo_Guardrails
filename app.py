@@ -131,7 +131,7 @@ def stream_response(message,history):
 # Create the Gradio interface
 with gr.Blocks() as demo:
   gr.Markdown("# Multimodal RAG Chatbot 🦀 ")
-  description=("Upload **at least** one document, optional to input HTML URL before Q&A")  
+  gr.Markdown("Upload **at least** one document, optional to input HTML URL before Q&A")  
 
   with gr.Row():
       file_input = [
