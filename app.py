@@ -27,7 +27,6 @@ from llama_index.readers.file import (
     PptxReader,
     CSVReader,
 )
-# os.makedirs('./data', exist_ok=True)
 
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
 Settings.embed_model = NVIDIAEmbedding(model="NV-Embed-QA", truncate="END")
@@ -81,19 +80,6 @@ def load_documents(file_objs):
         if not documents:
             return f"No documents found in the selected files."
 
-        # Function to get file names from file objects
-        # def get_files_from_input(file_objs):
-        #    if not file_objs:
-        #       return []
-        
-
-    # Load data using file extractor and SimpleDirectoryReader
-    # documents = SimpleDirectoryReader(
-    #            input_dir="./data", recursive=True, file_extractor=file_extractor
-    #        ).load_data()
-
-            # Get file names from documents
-            # return [doc.metadata['file_name'] for doc in documents]
 
         # Create a Milvus vector store and storage context
         # vector_store = MilvusVectorStore(
@@ -148,11 +134,11 @@ def stream_response(message,history):
 
 # Create the Gradio interface
 with gr.Blocks() as demo:
-  gr.Markdown("# RAG Chatbot")
+  gr.Markdown("# Multimodal RAG Chatbot")
 
   with gr.Row():
       file_input = gr.File(label="Select files to upload", file_count="multiple")
-      load_btn = gr.Button("Load PDF Documents only")
+      load_btn = gr.Button("Load Documents (PDF,CSV,Docx,Pptx,JPG,PNG)
 
   load_output = gr.Textbox(label="Load Status")
 
