@@ -77,14 +77,14 @@ def load_documents(file_objs):
             else:
                 print(f"Warning: Unsupported file type: {file_extension}")
 
-        file_paths = get_files_from_input(file_objs)
-        documents = []
-        for file_path in file_paths:
-            directory = os.path.dirname(file_path)
-            documents.extend(SimpleDirectoryReader(input_files=[file_path]).load_data())
+        # file_paths = get_files_from_input(file_objs)
+        #documents = []
+        #for file_path in file_paths:
+        #    directory = os.path.dirname(file_path)
+        #    documents.extend(SimpleDirectoryReader(input_files=[file_path]).load_data())
 
-        if not documents:
-            return f"No documents found in the selected files."
+        #if not documents:
+        #    return f"No documents found in the selected files."
 
 
         # Create a Milvus vector store and storage context
