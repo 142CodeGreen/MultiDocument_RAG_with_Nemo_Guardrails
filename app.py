@@ -27,7 +27,7 @@ from llama_index.readers.file import (
     PptxReader,
     CSVReader,
 )
-os.makedirs('./data', exist_ok=True)
+# os.makedirs('./data', exist_ok=True)
 
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
 Settings.embed_model = NVIDIAEmbedding(model="NV-Embed-QA", truncate="END")
@@ -62,6 +62,16 @@ def load_documents(file_objs):
         if not file_objs:
             return "Error: No files selected."
 
+        file_extractor = {
+        ".pdf": PDFReader(),
+        ".csv": CSVReader(),
+        ".html": HTMLReader(),
+        ".pptx": PptxReader(),
+        ".docx": DocxReader(),
+        ".jpg": ImageReader(),
+        ".png": ImageReader(),
+        }
+
         file_paths = get_files_from_input(file_objs)
         documents = []
         for file_path in file_paths:
@@ -72,27 +82,18 @@ def load_documents(file_objs):
             return f"No documents found in the selected files."
 
         # Function to get file names from file objects
-        def get_files_from_input(file_objs):
-            if not file_objs:
-                return []
-            # Define file extractor
-            file_extractor = {
-                ".pdf": PDFReader(),
-                ".csv": CSVReader(),
-                ".html": HTMLReader(),
-                ".pptx": PptxReader(),
-                ".docx": DocxReader(),
-                ".jpg": ImageReader(),
-                ".png": ImageReader(),
-            }
+        # def get_files_from_input(file_objs):
+        #    if not file_objs:
+        #       return []
+        
 
-            # Load data using file extractor and SimpleDirectoryReader
-            documents = SimpleDirectoryReader(
-                input_dir="./data", recursive=True, file_extractor=file_extractor
-            ).load_data()
+    # Load data using file extractor and SimpleDirectoryReader
+    # documents = SimpleDirectoryReader(
+    #            input_dir="./data", recursive=True, file_extractor=file_extractor
+    #        ).load_data()
 
             # Get file names from documents
-            return [doc.metadata['file_name'] for doc in documents]
+            # return [doc.metadata['file_name'] for doc in documents]
 
         # Create a Milvus vector store and storage context
         # vector_store = MilvusVectorStore(
