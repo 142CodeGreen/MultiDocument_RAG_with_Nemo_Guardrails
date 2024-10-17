@@ -113,7 +113,7 @@ def moderated_chat(message, history):
         history.append((message, validated_response.generated_text))
         yield history
     except Exception as e:
-        yield history + [(message, f"An error occurred: {str(e)}")]
+        return history + [(message,f"Error processing query: {str(e)}")]
 
 # Function to stream responses
 def stream_response(message, history):
