@@ -4,7 +4,7 @@ llama-index-llms-nvidia
 llama-index-embeddings-nvidia
 llama-index-postprocessor
 llama-index-vector-stores-Milvus
-llama_index.readers.file
+llama-index-readers-file
 ipywidgets
 gradio
 nemoguardrails
