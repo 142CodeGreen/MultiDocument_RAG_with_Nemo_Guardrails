@@ -81,7 +81,7 @@ def load_documents(file_objs, url=None):
 
         # Create index from documents
         def create_index(documents):
-        vector_store = MilvusVectorStore(
+            vector_store = MilvusVectorStore(
             host="127.0.0.1",
             port=19530,
             dim=1024,
