@@ -12,7 +12,7 @@ from llama_index.vector_stores.milvus import MilvusVectorStore
 from llama_index.llms.nvidia import NVIDIA
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
 from llama_index.postprocessor import NvidiaNeMoRerank
-from llama_index.readers.file import (
+from lama-index-readers-file import (
     Reader,
     # SimpleWebPageReader,
     HTMLTagReader,
