@@ -1,6 +1,5 @@
 import gradio as gr
-from llama_index.core import (
-    Settings,
+from llama_index import (
     SimpleDirectoryReader,
     VectorStoreIndex,
     ServiceContext,
