@@ -50,7 +50,7 @@ def get_files_from_input(file_objs):
     return [file_obj.name for file_obj in file_objs]
 
 # Function to load documents and create the index
-def load_documents(file_objs, url=None):
+def load_documents(file_objs, url=None, service_context=None):
     global index, query_engine
     try:
         if not file_objs:
@@ -99,6 +99,8 @@ def load_documents(file_objs, url=None):
         )
         query_engine = index.as_query_engine(similarity_top_k=20, streaming=True)
         return "Documents loaded successfully!"
+    except Exception as e:
+        return f"Error loading documents: {str(e)}"
 
 # Function to handle chat interactions
 def chat(message,history):
