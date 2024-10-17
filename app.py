@@ -22,6 +22,7 @@ from llama_index.readers.file import (
     ImageReader,
     CSVReader,
 )
+from llama_index.text_splitter import SentenceSplitter  # Import SentenceSplitter
 
 # Initialize LLM, embedding model, and text splitter
 Settings.llm = NVIDIA(model="meta/llama-3.1-8b-instruct")
@@ -81,8 +82,7 @@ def load_documents(file_objs, url=None, service_context=None):
             return f"No documents found in the selected files."
 
         # Create index from documents
-        def create_index(documents):
-            vector_store = MilvusVectorStore(
+        vector_store = MilvusVectorStore(
             host="127.0.0.1",
             port=19530,
             dim=1024,
@@ -92,7 +92,6 @@ def load_documents(file_objs, url=None, service_context=None):
         )
         # vector_store = MilvusVectorStore(uri="./milvus_demo.db", dim=1024, overwrite=True) #For CPU only vector store
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
-        return VectorStoreIndex.from_documents(documents, storage_context=storage_context)
 
         # Create index and query engine
         index = VectorStoreIndex.from_documents(
@@ -100,6 +99,7 @@ def load_documents(file_objs, url=None, service_context=None):
         )
         query_engine = index.as_query_engine(similarity_top_k=20, streaming=True)
         return "Documents loaded successfully!"
+
     except Exception as e:
         return f"Error loading documents: {str(e)}"
 
@@ -116,30 +116,12 @@ def chat(message,history):
     except Exception as e:
         return history + [(message,f"Error processing query: {str(e)}")]
 
-# Function to stream responses
-def stream_response(message,history):
-    global query_engine
-    if query_engine is None:
-        yield history + [("Please upload a file first.",None)]
-        return
-
-    try:
-        response = query_engine.query(message)
-        partial_response = ""
-        for text in response.response_gen:
-            partial_response += text
-            yield history + [(message,partial_response)]
-    except Exception as e:
-        yield history + [(message, f"Error processing query: {str(e)}")]
-
-
 with gr.Blocks() as iface:
     gr.Markdown("# Multi-document RAG Chatbot 🦀 ")  # Title using Markdown
     gr.Markdown("Upload various documents or HTML URL for Q&A")
     with gr.Row():
         with gr.Column():
-            file_input = gr.File(
-                file_count="multiple", label="Upload documents")
+            file_input = gr.File(file_count="multiple", label="Upload documents")
         with gr.Column():
             url_input = gr.Textbox(label="Enter URL")
     with gr.Row():
@@ -147,18 +129,17 @@ with gr.Blocks() as iface:
     status_output = gr.Textbox(label="Status")
 
     load_button.click(
-        fn=load_documents,
-        inputs=[file_input, url_input],
-        outputs=status_output,
+        fn=load_documents, inputs=[file_input, url_input, outputs=status_output,
     )
 
     with gr.Row():
         chatbot = gr.Chatbot()
         msg = gr.Textbox(label="Enter your question")
-        msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot])
+        # Use the chat function with Gurardrails
+        msg.submit(chat, inputs=[msg, chatbot], outputs=[chatbot])
         clear_button = gr.Button("Clear")
         clear_button.click(lambda: None, None, chatbot, queue=False)
 
 # Launch the Gradio interface
 if __name__ == "__main__":
-    demo.queue().launch(share=True,debug=True)
+    iface.queue().launch(share=True,debug=True)
