@@ -101,36 +101,31 @@ def load_documents(file_objs, url=None):
         return "Documents loaded successfully!"
 
 # Function to handle chat interactions
-def moderated_chat(message, history):
-    global query_engine, rails
+def chat(message,history):
+    global query_engine
     if query_engine is None:
-        return history + [("Please upload a file first.", None)]
+        return history + [("Please upload a file first.",None)]
     try:
-        # Get response from query engine
-        response = query_engine.query(message)
-        # Provide relevant context to guardrails
-        validated_response = rails.generate(context={"history": history, "response": response.response, "message": message}, prompt=message)
-        history.append((message, validated_response.generated_text))
-        yield history
+        #modification for nemo guardrails ( next three rows)
+        user_message = {"role":"user","content":message}
+        response = rails.generate(messages=[user_message])
+        return history + [(message,response['content'])]
     except Exception as e:
         return history + [(message,f"Error processing query: {str(e)}")]
 
 # Function to stream responses
-def stream_response(message, history):
+def stream_response(message,history):
     global query_engine
     if query_engine is None:
-        yield history + [("Please upload a file first.", None)]
+        yield history + [("Please upload a file first.",None)]
         return
 
     try:
-        # Get response from query engine
         response = query_engine.query(message)
-        # Provide relevant context to guardrails
-        validated_response = rails.generate(context={"history": history, "response": response.response, "message": message}, prompt=message)
         partial_response = ""
-        for text in validated_response.response_gen:
+        for text in response.response_gen:
             partial_response += text
-            yield history + [(message, partial_response)]
+            yield history + [(message,partial_response)]
     except Exception as e:
         yield history + [(message, f"Error processing query: {str(e)}")]
 
