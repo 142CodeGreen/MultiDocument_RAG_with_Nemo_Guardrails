@@ -1,11 +1,13 @@
 import gradio as gr
-from llama_index import (
+from llama_index.core import (
+    Settings,
     SimpleDirectoryReader,
     VectorStoreIndex,
     ServiceContext,
     LLMPredictor,
+    StorageContext,
 )
-from llama_index.storage.storage_context import StorageContext
+# from llama_index.storage.storage_context import StorageContext
 from llama_index.vector_stores.milvus import MilvusVectorStore
 from llama_index.llms.nvidia import NVIDIA
 from llama_index.embeddings.nvidia import NVIDIAEmbedding
