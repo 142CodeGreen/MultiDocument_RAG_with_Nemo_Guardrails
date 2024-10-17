@@ -116,6 +116,22 @@ def chat(message,history):
     except Exception as e:
         return history + [(message,f"Error processing query: {str(e)}")]
 
+# Function to stream responses
+def stream_response(message,history):
+    global query_engine
+    if query_engine is None:
+        yield history + [("Please upload a file first.",None)]
+        return
+
+    try:
+        response = query_engine.query(message)
+        partial_response = ""
+        for text in response.response_gen:
+            partial_response += text
+            yield history + [(message,partial_response)]
+    except Exception as e:
+        yield history + [(message, f"Error processing query: {str(e)}")]
+
 with gr.Blocks() as iface:
     gr.Markdown("# Multi-document RAG Chatbot 🦀 ")  # Title using Markdown
     gr.Markdown("Upload various documents or HTML URL for Q&A")
@@ -136,7 +152,7 @@ with gr.Blocks() as iface:
         chatbot = gr.Chatbot()
         msg = gr.Textbox(label="Enter your question")
         # Use the chat function with Gurardrails
-        msg.submit(chat, inputs=[msg, chatbot], outputs=[chatbot])
+        msg.submit(stream_response, inputs=[msg, chatbot], outputs=[chatbot])
         clear_button = gr.Button("Clear")
         clear_button.click(lambda: None, None, chatbot, queue=False)
 
